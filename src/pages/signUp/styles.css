@@ -1,0 +1,16 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid black;
+    height: 25%;
+    border: 25%;
+    
+}
+.item{
+    height: 5rem;
+    width: 5rem;
+    justify-content: center;
+    align-items: center;
+}
