@@ -5,12 +5,11 @@ import axios from "axios";
 import "./styles.css";
 import Cookies from "js-cookie";
 const HeaderBar = (props) => {
-  const { course, setCourse, setFiler } = props;
+  const { course, setCourse, setFilter, filter, displayCategory } = props;
 
   const [category, setCategory] = useState([]);
   const navigate = useNavigate();
   function categoryChange(e) {
-    console.log(e.target.value);
     setFiler(e.target.value);
   }
   useEffect(() => {
@@ -26,22 +25,79 @@ const HeaderBar = (props) => {
         setCategory(response.data);
       });
   }, []);
+  function handleSignOut() {
+    Cookies.remove("Token");
+    Cookies.remove("role");
+    navigate("/login");
+  }
 
   return (
-    <div className="header">
-      <div className="items">Courses</div>
-      <div className="items">
-        {/* {<select name="category" onChange={categoryChange}>
-          {category.data?.map((val, index) => (
-            <option value={val}>{val}</option>
-          ))}
-        </select>} */}
+    <div>
+      <div>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+
+          {Cookies.get("Token") && (
+            <li>
+              <a href="/my-courses">My Courses</a>
+            </li>
+          )}
+          {Cookies.get("Role") == "instructor" && (
+            <li>
+              <a href="/upload-courses">Upload Course</a>
+            </li>
+          )}
+
+          {displayCategory && (
+            <li>
+              <div className="dropdown">
+                <button className="dropbtn">
+                  Category
+                  <i className="fa fa-caret-down"></i>
+                </button>
+                <div className="dropdown-content">
+                  {/* {category.data?.map((val, index) => {
+                return val;
+              })} */}
+                  {category.data?.map((val, index) => (
+                    <div
+                      className={`a ${val}`}
+                      onClick={(e) => {
+                        setFilter(e.target.classList[1]);
+  
+                      }}
+                    >
+                      {val}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </li>
+          )}
+          <li>
+            <div className="dropdown">
+              <button className="dropbtn">
+                My Profile
+                <i className="fa fa-caret-down"></i>
+              </button>
+              <div className="dropdown-content">
+                {Cookies.get("Token") && (
+                  <div className="a" onClick={handleSignOut}>
+                    SignOut
+                  </div>
+                )}
+                {!Cookies.get("Token") && (
+                  <div className="a" onClick={handleSignOut}>
+                    SignIn
+                  </div>
+                )}
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
-      <div className="items" onClick={navigate("/my-courses")}>
-        My Courses
-      </div>
-      {Cookies.get("User") === "instructor" && <div className="items"></div>}
-      <div className="items"></div>
     </div>
   );
 };

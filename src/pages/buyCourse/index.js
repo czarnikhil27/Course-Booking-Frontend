@@ -8,6 +8,12 @@ import Cookies from "js-cookie";
 import "./styles.css";
 import axios from "axios";
 import { maxHeight } from "@mui/system";
+import {
+  Player,
+  DefaultUi,
+  Video
+} from "@vime/react";
+import VideoPlayer from "../../components/videoPlayer";
 const BuyCourse = () => {
   const [params, setParams] = useState(useParams().id);
   const [data, setData] = useState({});
@@ -19,13 +25,11 @@ const BuyCourse = () => {
     const config = {
       headers: { Authorization: `Bearer ${Cookies.get("Token")}` },
     };
-    console.log(data._id);
     axios
       .get(
         `http://localhost:8080/practice-course/v1/checkout-session/${data._id}`,config
       )
       .then((res) => {
-        console.log(res.data.url);
         window.location = res.data.url;
       })
       .catch((err) => {
@@ -34,10 +38,12 @@ const BuyCourse = () => {
       
   }
   async function getData() {
+     const config = {
+      headers: { Authorization: `Bearer ${Cookies.get("Token")}` },
+    };
     axios
-      .get(`http://localhost:8080/practice-course/v1/course/${params}`)
+      .get(`http://localhost:8080/practice-course/v1/course/${params}`,config)
       .then((res) => {
-        console.log(res.data.data.val);
         setData(res.data.data.val);
       });
   }
@@ -52,7 +58,7 @@ const BuyCourse = () => {
       <h3>{data.name}</h3>
       <p>{data.summary}</p>
       <h2>Rs : {data.price}</h2>
-      <Box className="ratingStar ">
+      {!data.video && <Box className="ratingStar ">
         <Rating
           name="read-only"
           value={data.ratingsAverage}
@@ -60,10 +66,11 @@ const BuyCourse = () => {
           className="star"
         />
         <div className="ratingtotal">{data.ratingsQuantity}</div>
-        <button className="button" onClick={buyCourse}>
+        {<button className="button" onClick={buyCourse}>
           Buy Now
-        </button>
-      </Box>
+        </button>}
+      </Box>}
+      {data.video && <VideoPlayer courseId={params} />}
     </div>
   );
 };

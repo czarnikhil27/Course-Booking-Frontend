@@ -15,7 +15,6 @@ const MyCourses = () => {
 
   useEffect(() => {
     const a = new URLSearchParams(window.location);
-    console.log(a);
     
     const config = {
       headers: { Authorization: `Bearer ${Cookies.get("Token")}` },
@@ -26,18 +25,14 @@ const MyCourses = () => {
         config
       )
       .then((response) => {
-      console.log(response.data)
        setCourse(response.data)
        setCourse(response.data)
-       console.log(course)
       });
   }, []);
   return (
     <div className="container">
-      <h1>Courses</h1>
       <HeaderBar course={course} setCourse={setCourse} setFiler={setFiler}/>
       <CourseCard course={course} />
-      {/* <ImageForm></ImageForm> */}
     </div>
   );
 };

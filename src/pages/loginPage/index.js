@@ -22,7 +22,6 @@ const LoginPage = () => {
         if (response.status === 200) {
           Cookies.set('Token',response.data.token)
           Cookies.set('Role',response.data.role)
-          console.log(response)
           navigate("/");
         } else {
           console.log("incorrect password");

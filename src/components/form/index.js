@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import HeaderBar from "../header";
+import { useNavigate } from "react-router-dom";
 const ImageForm = () => {
+  const navigate = useNavigate()
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [category, setCategory] = useState([]);
@@ -40,8 +43,6 @@ const ImageForm = () => {
   };
 
   const handleVideoChange = (event) => {
-    console.log("line44")
-    console.log(event.target.files[0]);
     setSelectedVideo(event.target.files[0]);
   };
 
@@ -53,13 +54,12 @@ const ImageForm = () => {
     formData.append("category", data.category);
     formData.append("name", data.name);
     formData.append("summary", data.summary);
-    console.log(selectedVideo)
     try {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("Token")}` },
       };
       const response = await axios.post(
-        "http://localhost:8080/practice-course/v1/course/create-course/63e3d46bb3eab50222c106e1",
+        "http://localhost:8080/practice-course/v1/course/create-course",
         formData,
         {
           headers: {
@@ -67,26 +67,51 @@ const ImageForm = () => {
             Authorization: `Bearer ${Cookies.get("Token")}`,
           },
         }
-      );
+      ).then((res)=>{
+        if(res.status===200){
+          navigate('/my-courses')
+        }
+      })
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
+    <div>
+      <HeaderBar />
     <form onSubmit={handleSubmit}>
+      <label for="email">
+        <b>Name</b>
+      </label>
       <input type="text" name="name" onChange={onDataChange} />
+      <label for="email">
+        <b>Category</b>
+      </label>
       <select name="category" onChange={onDataChange}>
         {category.data?.map((val, index) => (
           <option value={val}>{val}</option>
         ))}
       </select>
+      <label for="email">
+        <b>Price</b>
+      </label>
       <input type="text" name="price" onChange={onDataChange} />
+      <label for="email">
+        <b>Summary</b>
+      </label>
       <input type="text" name="summary" onChange={onDataChange} />
+      <label for="email">
+        <b>Image</b>
+      </label>
       <input type="file" onChange={handleFileChange} />
+      <label for="email">
+        <b>Video</b>
+      </label>
       <input type="file" onChange={handleVideoChange} />
       <button type="submit">Submit</button>
     </form>
+    </div>
   );
 };
 
