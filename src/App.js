@@ -4,6 +4,7 @@ import BuyCourse from "./pages/buyCourse";
 import LoginPage from "./pages/loginPage";
 import MainPage from "./pages/mainPage";
 import MyCourses from "./pages/myCourses";
+import PasswordReset from "./pages/passwordReset";
 import SignUp from "./pages/signUp";
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/:id" element={<BuyCourse />} />
           <Route path="/my-courses" element={<MyCourses />} />
-          <Route path="/upload-courses" element={<ImageForm />} />
+          <Route path="/my-courses" element={<MyCourses />} />
+          <Route path="/reset-password" element={<PasswordReset />} />
         </Routes>
       </BrowserRouter>
     </>

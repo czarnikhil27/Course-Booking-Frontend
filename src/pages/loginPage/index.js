@@ -6,11 +6,28 @@ import "./styles.css";
 import Cookies from "js-cookie";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
+  const [error,setError] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleSignUp = () => {
     navigate("/signup");
   };
+  const handleForgot=()=>{
+    if(email.length<=1)
+    {
+      setError("enter email");
+      return;
+    }
+    axios.post('http://localhost:8080/practice-course/v1/user/forgot-password',{email:email}).then((res)=>{
+      if(res.status==200)
+      {
+        navigate('/reset-password');
+      }
+    })
+    .catch((err)=>{console.log(err)})
+    navigate('/reset-password')
+  }
+ 
   async function handleLogin() {
     const verified = axios
       .post("http://localhost:8080/practice-course/v1/user/login", {
@@ -62,6 +79,8 @@ const LoginPage = () => {
       </div>
       <button onClick={handleSignUp}>Sign-Up</button>
       <button onClick={handleLogin}>Login</button>
+      <button onClick={handleForgot}>Forgot Password?</button>
+      <span>{error}</span>
     </div>
   );
 };
