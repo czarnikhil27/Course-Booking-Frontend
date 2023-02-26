@@ -7,12 +7,6 @@ import Rating from "@mui/material/Rating";
 import Cookies from "js-cookie";
 import "./styles.css";
 import axios from "axios";
-import { maxHeight } from "@mui/system";
-import {
-  Player,
-  DefaultUi,
-  Video
-} from "@vime/react";
 import VideoPlayer from "../../components/videoPlayer";
 const BuyCourse = () => {
   const [params, setParams] = useState(useParams().id);
@@ -27,7 +21,7 @@ const BuyCourse = () => {
     };
     axios
       .get(
-        `http://localhost:8080/practice-course/v1/checkout-session/${data._id}`,config
+        `${process.env.REACT_APP_URL}practice-course/v1/checkout-session/${data._id}`,config
       )
       .then((res) => {
         window.location = res.data.url;
@@ -42,7 +36,7 @@ const BuyCourse = () => {
       headers: { Authorization: `Bearer ${Cookies.get("Token")}` },
     };
     axios
-      .get(`http://localhost:8080/practice-course/v1/course/${params}`,config)
+      .get(`${process.env.REACT_APP_URL}practice-course/v1/course/${params}`,config)
       .then((res) => {
         setData(res.data.data.val);
       });
@@ -52,7 +46,7 @@ const BuyCourse = () => {
     <div className="container">
       <img
         style={{ maxHeight: "30rem", maxWidth: "30rem" }}
-        src={`http://localhost:8080/${data.photo}`}
+        src={`${process.env.REACT_APP_URL}${data.photo}`}
         crossorigin="anonymous"
       />
       <h3>{data.name}</h3>

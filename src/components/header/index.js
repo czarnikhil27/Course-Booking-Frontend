@@ -6,21 +6,18 @@ import "./styles.css";
 import Cookies from "js-cookie";
 const HeaderBar = (props) => {
   const { course, setCourse, setFilter, filter, displayCategory } = props;
-
   const [category, setCategory] = useState([]);
+  console.log(process.env)
   const navigate = useNavigate();
   function categoryChange(e) {
-    setFiler(e.target.value);
+    setFilter(e.target.value);
   }
   useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${Cookies.get("Token")}` },
     };
     axios
-      .get(
-        "http://localhost:8080/practice-course/v1/course/get-category",
-        config
-      )
+      .get(`${process.env.REACT_APP_URL}practice-course/v1/course/get-category`, config)
       .then((response) => {
         setCategory(response.data);
       });
@@ -66,7 +63,6 @@ const HeaderBar = (props) => {
                       className={`a ${val}`}
                       onClick={(e) => {
                         setFilter(e.target.classList[1]);
-  
                       }}
                     >
                       {val}

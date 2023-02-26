@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./styles.css";
 
 const imageUrl = "";
@@ -24,7 +23,7 @@ const CourseCard = (props) => {
           <div className="cardPhoto ">
             <img
               style={{ height: "10rem", width: "10rem" }}
-              src={`http://localhost:8080/${data.photo}`}
+              src={`${process.env.REACT_APP_URL}${data.photo}`}
               crossorigin="anonymous"
             />
           </div>

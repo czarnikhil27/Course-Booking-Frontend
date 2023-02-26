@@ -31,7 +31,7 @@ const SignUp = () => {
         setError("passwords do not match");
       }
       await axios
-        .post("http://localhost:8080/practice-course/v1/user/signup", data)
+        .post(`${process.env.REACT_APP_URL}practice-course/v1/user/signup`, data)
         .then((response) => {
           if (response.status === 200) {
             Cookies.set('Token',response.data.token)

@@ -1,9 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import CourseCard from "../../components/courseCard";
-import { useLocation } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import HeaderBar from '../../components/header'
@@ -11,7 +8,6 @@ import "./styles.css";
 const MyCourses = () => {  
   const [course, setCourse] = useState([]);
   const[filer,setFiler] = useState('finance');
-  const [token, setToken] = useState([]);
 
   useEffect(() => {
     const a = new URLSearchParams(window.location);
@@ -21,7 +17,7 @@ const MyCourses = () => {
     };
     axios
       .get(
-        `http://localhost:8080/practice-course/v1/course/user-courses`,
+        `${process.env.REACT_APP_URL}practice-course/v1/course/user-courses`,
         config
       )
       .then((response) => {

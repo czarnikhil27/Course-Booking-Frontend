@@ -18,7 +18,7 @@ const LoginPage = () => {
       setError("enter email");
       return;
     }
-    axios.post('http://localhost:8080/practice-course/v1/user/forgot-password',{email:email}).then((res)=>{
+    axios.post(`${process.env.REACT_APP_URL}practice-course/v1/user/forgot-password`,{email:email}).then((res)=>{
       if(res.status==200)
       {
         navigate('/reset-password');
@@ -30,7 +30,7 @@ const LoginPage = () => {
  
   async function handleLogin() {
     const verified = axios
-      .post("http://localhost:8080/practice-course/v1/user/login", {
+      .post(`${process.env.REACT_APP_URL}practice-course/v1/user/login`, {
         email: email,
         password: password,
         withCredentials: true,

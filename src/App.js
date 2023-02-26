@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ImageForm from "./components/form";
 import BuyCourse from "./pages/buyCourse";
 import LoginPage from "./pages/loginPage";
 import MainPage from "./pages/mainPage";

@@ -14,7 +14,7 @@ const ImageForm = () => {
     };
     axios
       .get(
-        "http://localhost:8080/practice-course/v1/course/get-category",
+        `${process.env.REACT_APP_URL}practice-course/v1/course/get-category`,
         config
       )
       .then((response) => {
@@ -59,7 +59,7 @@ const ImageForm = () => {
         headers: { Authorization: `Bearer ${Cookies.get("Token")}` },
       };
       const response = await axios.post(
-        "http://localhost:8080/practice-course/v1/course/create-course",
+        `${process.env.REACT_APP_URL}practice-course/v1/course/create-course`,
         formData,
         {
           headers: {

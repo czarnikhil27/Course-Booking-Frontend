@@ -13,7 +13,7 @@ const {courseId} = props;
       //this inserts our video into the app.
       <Video crossOrigin=""  poster="https://media.vimejs.com/poster.png">
         //specify location of video to be used
-        <source data-src={`http://localhost:8080/practice-course/v1/course/get-video/${courseId}`} type="video/mp4" />
+        <source data-src={`${process.env.URL}practice-course/v1/course/get-video/${courseId}`} type="video/mp4" />
         <track
           default
           kind="subtitles"

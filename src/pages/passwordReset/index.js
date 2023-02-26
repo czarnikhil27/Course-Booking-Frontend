@@ -33,7 +33,7 @@ const PasswordReset = () => {
         setError("passwords do not match");
       }
       await axios
-        .post(`http://localhost:8080/practice-course/v1/user/reset-password/${token}`, 
+        .post(`${process.env.REACT_APP_URL}practice-course/v1/user/reset-password/${token}`, 
         {
             "password":data.password,
             "passwordConfirm":data.confirmPassword
